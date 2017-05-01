@@ -11,11 +11,11 @@
 			@if (auth()->check())
 
 			@if(auth()->user()->role ==0)
-			 <li><a href="{{ route('register') }}">Register</a></li>
+			 <li @if(request()->is('register')) class="active" @endif ><a href="{{ route('register') }}">Registerar Doct</a></li> 
 			 @endif
 
 
-			<li><a href="#"> Menu </a> </li>
+			<li @if(request()->is('usuarios')) class="active" @endif ><a href="{{url('/usuarios')}}">CRUD</a> </li>
 			<li><a href="#"> insidencias </a> </li>
 
 			<li role="presentation" class="dropdown">
