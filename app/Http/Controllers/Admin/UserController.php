@@ -10,7 +10,8 @@ class UserController extends Controller
 {
     public function index()
     {
-    	$users= User::all();
+        $users = User::withTrashed()->get();
+    	//$users= User::all();
     	return view('admin.users.index')->with(compact('users'));
     }
 
@@ -89,6 +90,18 @@ class UserController extends Controller
 
     	return back()->with('notification', 'El usuario a sido eliminado');
     }
+
+
+ public function restore($id)
+    {
+        
+        User::withTrashed()->find($id)->restore();
+
+
+
+        return back()->with('notification', 'El usuario se a  Restaurado');
+    }
+
 
 
 

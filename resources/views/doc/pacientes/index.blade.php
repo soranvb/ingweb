@@ -2,7 +2,7 @@
 
 @section('content')
           <div class="panel panel-primary">
-                <div class="panel-heading">Dashboard</div>
+                <div class="panel-heading">Registro de Paciente</div>
 
                 <div class="panel-body">
 
@@ -30,63 +30,62 @@
                         {{csrf_field() }}
 
                         <div class="form-group">
-                            <label for="email">E-mail</label>
-                            <input type="email" name="email" class="form-control" value="{{old('email')}}">
-                        </div>
-
-                        <div class="form-group">
                             <label for="Name">Nombre</label>
-                            <input type="text" name="name" class="form-control" value="{{old('name')}}">
+                            <input type="text" name="name" class="form-control" required value="{{old('name')}}">
                         </div>
 
+                       <label for="sexo">Sexo:</label>
+                        <select name="sexo" class="form-control" required>
+                             <option value="" selected>Selecciona sexo</option>
+                             <option value="1">Femenino</option>
+                             <option value="2">Masculino</option>
+                        </select>
+        
                         <div class="form-group">
-                            <label for="password">Contraseña</label>
-                            <input type="text" name="password" class="form-control" value="{{old('password')}}"> <!--('password',str_random(8)-->
+                            <label for="start">Fecha</label>
+                            <input type="date" name="start" class="form-control" required value="{{old('start', date('Y-m-d'))}}">
                         </div>
-
+                        
                         <div class="form-group">
-                            <button class="btn btn-primary">Registrar</a>
+                            <button class="btn btn-primary">Registrar pacientes</a>
                         </div>
-
-
 
                         <table class="table table-bordered">
                             <thead>
-                                    <tr>
-                                        <th>Correo</th>
+                                    <tr>                                        
                                         <th>Nombre</th>
+                                        <th>Sexo</th>
+                                        <th>Fecha de inicio</th>
                                         <th>Opciones</th>
                                     </tr>
                             </thead>
                                 <tbody>
-                                    @foreach($users as $user)
-                                    <tr>
-                                        @if($user->role==1)
-                                        <td>{{$user->email}}</td>
-                                        <td>{{$user->name}}</td>
+                                    @foreach($pacientes as $paciente)
+                                    <tr>                                       
+                                        <td>{{$paciente->name}}</td>
+                                         <td>@if($paciente->sexo==1)
+                                              Femenino
+                                              @else
+                                              Masculino
+                                              @endif</td>
+                                         <td>{{$paciente->start}}</td>     
+                                         
 
+                                         
                                         <td>
-                                            <a href="usuario/{{$user->id}}" class="btn btn-sm btn-primary" title="editar">
+                                            <a href="paciente/{{$paciente->id}}" class="btn btn-sm btn-primary" title="editar">
                                                 <span class="glyphicon glyphicon-pencil"></span>
                                             </a>
-                                            @if($user->trashed())
-
-                                             <a href="usuario/{{$user->id}}/restaurar" class="btn btn-sm btn-success" title="Restaurar">
-                                                <span class="glyphicon glyphicon-repeat"></span>
-                                            </a>
-
-                                            @else
-                                            <a href="usuario/{{$user->id}}/eliminar" class="btn btn-sm btn-danger" title="Eliminar">
+                                            <a href="usuario/{{$paciente->id}}/eliminar" class="btn btn-sm btn-danger" title="Eliminar">
                                                 <span class="glyphicon glyphicon-trash"></span>
                                             </a>
-                                            @endif
-
-                                            @endif
                                         </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
                         </table>
+                    -->
                 </div>
             </div>
+        
 @endsection

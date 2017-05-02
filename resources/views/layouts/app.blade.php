@@ -92,6 +92,11 @@
         
     </div>
 
+    <footer class="text-center">
+        <hr>
+       Sistema De Gestion De Pacientes  &copy; 2017
+    </footer>
+
     <!-- Scripts -->
     <script
   src="http://code.jquery.com/jquery-3.2.1.min.js"
