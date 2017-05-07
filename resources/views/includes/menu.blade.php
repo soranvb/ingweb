@@ -24,7 +24,24 @@
    		 	 </a>
   	  			<ul class="dropdown-menu">
       	 			<li><a href="{{url('/registrarPacientes')}}"> Registrar Paciente</a> </li>
-      	 			<li><a href="#"> 2 </a> </li>
+      	 			<li><a href="{{url('/consultarPacientes')}}"> Consultar Pacientes</a> </li> VERIFICAR RUTA
+     	 			<li><a href="#"> 3 </a> </li>
+      			</ul>
+
+
+      			 <li role="presentation" class="dropdown">
+   			 <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+   		     Pacientes V2Y <span class="caret"></span>
+   		 	 </a>
+  	  			<ul class="dropdown-menu">
+      	 			<li><a href="{{url('/pacientes')}}"> Registrar Paciente</a> </li>
+
+              <form action="{{url('/consultarPacientes2')}}" method="POST">
+                <input type="hidden" id="token" name="_token" value="{{csrf_token()}}">
+                <input name="id_doc" type="hidden" value="{{Auth::user()->id}}">
+                <button type="submit">Consultar</button>
+              </form>
+      	 			<li><a href="{{url('/pacientesConsulta')}}/{{Auth::user()->id}}"> Consultar Pacientes</a> </li>
      	 			<li><a href="#"> 3 </a> </li>
       			</ul>
       		@endif

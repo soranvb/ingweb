@@ -7,7 +7,7 @@
                 <div class="panel-body">
 
 
-                    @if(session('notification'))
+          <!--          @if(session('notification'))
                         <div class="alert alert-success">
                             {{session('notification')}}
                         </div>
@@ -61,19 +61,16 @@
 
                         
                         <div class="form-group">
-                           <button type="submit" class="btn btn-primary">Registrar</button>
-            <a href="{{url('/')}}" class="btn btn-danger">Cancelar</a>
-
+                            <button class="btn btn-primary">Registrar pacientes</a>
                         </div>
-                            
-
-
+            -->
                         <table class="table table-bordered">
                             <thead>
                                     <tr>                                        
                                         <th>Nombre</th>
                                         <th>Sexo</th>
                                         <th>Fecha de registro</th>
+                                        <th>Doctor</th>
                                         <th>Opciones</th>
                                     </tr>
                             </thead>
@@ -86,7 +83,8 @@
                                               @else
                                               Masculino
                                               @endif</td>
-                                         <td>{{$paciente->start}}</td>     
+                                         <td>{{$paciente->start}}</td>  
+                                         <td>{{$paciente->user_id}}</td>   
                                          
 
                                          

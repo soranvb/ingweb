@@ -20,6 +20,9 @@ class CreatePacientesTable extends Migration
             $table->string('sexo',1);
             $table->date('start')->nullable();
             $table->string('email')->unique();
+            $table->integer('paciente_id')->nullable();
+
+            $table->softDeletes();
             $table->timestamps();
 
 

@@ -8,7 +8,7 @@ Route::get('/', function ()
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+Route::get('/home/', 'HomeController@index');
 Route::get('/reportar', 'HomeController@report');
 
 //Administrador
@@ -43,13 +43,17 @@ Route::group(['middleware' => 'auth', 'namespace'=>'Doc'], function ()
 
 
 
-
+Route::get('/pacientesConsulta/{id}', 'PacienteController@indexConsulta');
         //22222222
 
 
          Route::get('/registrarPacientes', 'PacienteController@registrarPacientes');
 
-         Route::post('/guardarPaciente', 'PacienteController@guardarPaciente');      
+         Route::post('/guardarPaciente', 'PacienteController@guardarPaciente');     
+
+          Route::get('/consultarPacientes', 'PacienteController@consultarPacientes'); 
+
+          Route::post('/consultarPacientes2', 'PacienteController@consultarPacientes2');
 
 
     });

@@ -29,20 +29,13 @@
                     <form action="" method="POST">
                         {{csrf_field() }}
 
-                        <input name="id_user" type="text" value="{{Auth::user()->id}}">
-
-                        <div class="form-group">
+           <!--             <div class="form-group">
                             <label for="Name">Nombre</label>
-                            <input type="text" name="name" placeholder="Teclea Nombre" class="form-control" required value="{{old('name')}}">
+                            <input type="text" name="name" class="form-control" required value="{{old('name')}}">
                         </div>
 
-                        <div class="form-group">
-                <label for="edad">Edad:</label>
-                <input name="edad" type="number" placeholder="Teclea Edad" class="form-control" required value="{{old('edad')}}">
-            </div>
-
                        <label for="sexo">Sexo:</label>
-                        <select name="sexo" class="form-control" required value="{{old('sexo')}}">
+                        <select name="sexo" class="form-control" required>
                              <option value="" selected>Selecciona sexo</option>
                              <option value="1">Femenino</option>
                              <option value="2">Masculino</option>
@@ -52,28 +45,17 @@
                             <label for="start">Fecha</label>
                             <input type="date" name="start" class="form-control" required value="{{old('start', date('Y-m-d'))}}">
                         </div>
-
-                    
-            <div class="form-group">
-                <label for="email"> Correo:</label>
-                <input name="email" type="email" placeholder="Teclea e-mail" class="form-control" >
-            </div>
-
                         
                         <div class="form-group">
-                           <button type="submit" class="btn btn-primary">Registrar</button>
-            <a href="{{url('/')}}" class="btn btn-danger">Cancelar</a>
-
+                            <button class="btn btn-primary">Registrar pacientes</a>
                         </div>
-                            
-
-
+                                        -->
                         <table class="table table-bordered">
                             <thead>
                                     <tr>                                        
                                         <th>Nombre</th>
                                         <th>Sexo</th>
-                                        <th>Fecha de registro</th>
+                                        <th>Fecha de inicio</th>
                                         <th>Opciones</th>
                                     </tr>
                             </thead>
@@ -102,8 +84,7 @@
                                     @endforeach
                                 </tbody>
                         </table>
-                    
-                </div>
+                    </div>
             </div>
         
 @endsection

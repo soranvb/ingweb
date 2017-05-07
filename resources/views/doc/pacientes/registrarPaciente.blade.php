@@ -5,16 +5,43 @@
 <div class="panel panel-primary">
     <div class="panel-heading">Registro de Paciente</div>
     <div class="panel-body">
+
+
+
+
+                    @if(session('notification'))
+                        <div class="alert alert-success">
+                            {{session('notification')}}
+                        </div>
+                    @endif
+
+
+
+                    @if(count($errors)>0)
+                        <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                        </div>
+                    @endif
+
+
+
+
         <form action="{{url('/guardarPaciente')}}" method="POST">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
          
 
        
-            <input name="id_user" type="hidden" value="{{Auth::user()->id}}">
+            <input name="id_user" type="text" value="{{Auth::user()->id}}">
+
+           <!--  <input name="paciente_id" type="text" value="00000{{Auth::user()->id}}"> -->
            
             
-
-
+        
+            <div class="form-group">
                 <label for="nombre">Nombre:</label>
                 <input name="nombre" type="text" placeholder="Teclea nombre" class="form-control" required>
             </div>
