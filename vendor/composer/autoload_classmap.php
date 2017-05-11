@@ -7,7 +7,6 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Cpdf' => $vendorDir . '/dompdf/dompdf/lib/Cpdf.php',
-    'CreatePacientesDoctoresTable' => $baseDir . '/database/migrations/2017_05_02_222145_create_pacientes_doctores_table.php',
     'CreatePacientesTable' => $baseDir . '/database/migrations/2017_05_01_173704_create_pacientes_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/2014_10_12_000000_create_users_table.php',
@@ -467,6 +466,8 @@ return array(
     'PHP_Token_YIELD' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_YIELD_FROM' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PacientesTableSeeder' => $baseDir . '/database/seeds/PacientesTableSeeder.php',
+    'Receta' => $baseDir . '/database/migrations/2017_05_10_182102_Receta.php',
+    'RecetasTableSeeder' => $baseDir . '/database/seeds/RecetasTableSeeder.php',
     'SebastianBergmann\\CodeCoverage\\CodeCoverage' => $vendorDir . '/phpunit/php-code-coverage/src/CodeCoverage.php',
     'SebastianBergmann\\CodeCoverage\\CoveredCodeNotExecutedException' => $vendorDir . '/phpunit/php-code-coverage/src/Exception/CoveredCodeNotExecutedException.php',
     'SebastianBergmann\\CodeCoverage\\Driver\\Driver' => $vendorDir . '/phpunit/php-code-coverage/src/Driver/Driver.php',

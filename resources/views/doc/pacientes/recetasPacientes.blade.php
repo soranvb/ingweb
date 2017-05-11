@@ -6,17 +6,17 @@
 
 
           <div class="panel panel-primary">
-                <div class="panel-heading">Registro de Paciente</div>
+                <div class="panel-heading">Selección de Paciente </div>
                   </div> 
 
-                <div class="input-group input-group">
+                  <div class="input-group input-group">
                     <span class="input-group-addon">Buscador</span>
-                        <input type="text" class="form-control" id="search" name="search" placeholder="INGRESE NOMBRE DEL PACIENTE" value=""></input>
-                  </div>
-
+       <input type="text" class="form-control" id="search" name="search" placeholder="INGRESE NOMBRE DEL PACIENTE" value="" rows="4"></input>
+      </div>
 
                     
-                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+       
     </div>
 
 
@@ -42,8 +42,6 @@
                         </div>
                     @endif
 
-
-                  
 
                     <form action="" method="POST">
                         {{csrf_field() }}
@@ -95,61 +93,20 @@
                                     </tr>
                             </thead>
                                 <tbody>
-                                    @foreach($pacientes as $paciente)
-                                    <tr>                                       
-                                        <td>{{$paciente->name}}</td>
-                                         <td>@if($paciente->sexo==1)
-                                              Femenino
-                                              @else
-                                              Masculino
-                                              @endif</td>
-                                         <td>{{$paciente->start}}</td>  
-                                         <td>{{$paciente->user_id}}</td>   
-                                         
-
-                                         
-                                        <td>
-
-
-                                             @if($paciente->trashed())
-
-                                             <a href="{{url('restaurarpaciente')}}/{{$paciente->id}}" class="btn btn-sm btn-success" title="Restaurar">
-                                                <span class="glyphicon glyphicon-repeat"></span>
-                                            </a>
-
-                                            @else
-
-
-
-                                            <a href="paciente/{{$paciente->id}}" class="btn btn-sm btn-primary" title="editar">
-                                                <span class="glyphicon glyphicon-pencil"></span>
-                                            </a>
-                                            <a href="{{url('eliminarpaciente')}}/{{$paciente->id}}" class="btn btn-sm btn-danger" title="Eliminar">
-                                                <span class="glyphicon glyphicon-trash"></span>
-                                            </a>
-                                            @endif
-
-
-
-
-
-
-                                        </td>
-                                    </tr>
-                                    @endforeach
+                                    
                                 </tbody>
                         </table>
                     
                 </div>
             </div>
 
-            <script type="text/javascript">
+              <script type="text/javascript">
               $('#search').on('keyup',function()
               {
                  $value=$(this).val();
                  $.ajax({
                   type : 'get',
-                  url  : '{{URL::to('searchConsulta')}}',
+                  url  : '{{URL::to('search')}}',
                   data : {'search':$value},
                   success:function(data){
                     $('tbody').html(data);
@@ -157,12 +114,6 @@
                  });
               })
               </script>
-
-               <script type="text/javascript">
-            setTimeout(function() {
-                $("#alerta").fadeOut(3000);
-            },2000);
-      </script>
 
                <script type="text/javascript">
             setTimeout(function() {

@@ -6,111 +6,328 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Paciente;
 use App\User;
-
-class PacienteController extends Controller
-{
-      public function index()
+use App\Receta;
+use DB;
+    class PacienteController extends Controller
     {
-        
-    	$pacientes= Paciente::all();
-    	return view ('doc.pacientes.index')->with(compact('pacientes'));
-    }
+          public function index()
+        {
+            
+        	$pacientes= Paciente::all();
+        	return view ('doc.pacientes.index')->with(compact('pacientes'));
+        }
 
 
-      public function indexConsulta($id)
-    {
-        
-        // $pacientes= Paciente::all();
 
-         $pacientes=Paciente::where('user_id',$id)->get();
+
+
+         public function RecetaPacientes()
+        {
+
+             
+         /*if ($request)
+            {
+            $query=trim($request->get('searchText'));
+                $pacientes=DB::table('pacientes')->where('name','LIKE','%'.$query.'%')
+                ->paginate(7);
+            } */ 
+
+        $id_doc=auth()->user()->id;
+        $pacientes=Paciente::where('user_id',$id_doc)->get();
+
+            return view ('doc.pacientes.recetasPacientes')->with(compact('pacientes'));;
+        }
+
+            public function search(Request $request)
+            {
+                $id_doc=auth()->user()->id;
+                if ($request->ajax())
+                    {
+                        $output="";
+                        $sexo="";
+                        $pacientes=Paciente::where('name','LIKE','%'.$request->search.'%')
+                        ->where('user_id','=', $id_doc)->get();
+
+                        if($pacientes)
+                        {
+                            foreach($pacientes as $key => $paciente)
+                               
+                            {
+                                 if($paciente->sexo==1)
+                                {
+                                    $sexo="Femenino";
+                                }
+                                else
+                                {
+                                    $sexo="Masculino";
+                                }
+
+                                $output.='<tr>'.
+                                          '<td>'.$paciente->name.'</td>'.
+                                          '<td>'.$sexo.'</td>'.
+                                          '<td>'.$paciente->start.'</td>'.
+                                          '</tr>';
+                            } 
+                           return Response($output) ;
+                        }
+
+                    } 
+            }
+
+
+
+
+            public function searchConsulta(Request $request)
+            {
+                $id_doc=auth()->user()->id;
+                if ($request->ajax())
+                    {
+                        $output="";
+                        $sexo="";
+                        $pacientes=Paciente::where('name','LIKE','%'.$request->search.'%')
+                        ->where('user_id','=', $id_doc)->get();
+
+                        if($pacientes)
+                        {
+                            foreach($pacientes as $key => $paciente)
+                               
+                            {
+                                 if($paciente->sexo==1)
+                                {
+                                    $sexo="Femenino";
+                                }
+                                else
+                                {
+                                    $sexo="Masculino";
+                                }
+
+                                $output.='<tr>'.
+                                          '<td>'.$paciente->name.'</td>'.
+                                          '<td>'.$sexo.'</td>'.
+                                          '<td>'.$paciente->start.'</td>'.
+                                          '<td>'.$paciente->user_id.'</td>'.
+                                          '</tr>';
+
+
+
+
+                            } 
+                           return Response($output) ;
+                        }
+
+                    } 
+            }
+
+
+
+
+
+
+
+
+
        
-        return view ('doc.pacientes.indexConsulta')->with(compact('pacientes'));
-    }
+        public function consultarPacientes()
+        {
 
-    public function consultarPacientes2(Request $request){
-        $id_doc=$request->input('id_doc');
-         $pacientes=Paciente::where('user_id',$id_doc)->get();
-       
-        return view ('doc.pacientes.indexConsulta')->with(compact('pacientes'));
-    }
+           
+                
 
-
-    public function store(Request $request)
-    {
-    	$rules =[
-    		'name'=>'required|max:255',
-    		'email'=>'required|email|max:255|unique:pacientes',
-    		'start'=>'date',
-    	];
-
-    	$messages=[
-    			'name.requiered'=>'Es necesario ingresar el nombre del usuario',
-    			'name.max'=>'El nombre es demasiado extenso',
-    			'email.requiered'=>'Es necesario ingresar email',
-    			'email.max'=>'Este email es demasiado extenso',
-    			'email.unique'=>'El email ya se encuentra en uso',
-    			'password.requiered'=>'Olvido ingresar una contraseña',
-    			'password.min'=>'La contraseña debe tener por lo menos 6 carracteres',
-    			'start.date'=>'La fecha no tiene un formato adecuado',
-    		];
-
-    	$this->validate($request,$rules, $messages);
-
-    	$paciente= new Paciente();
-        $paciente->user_id=$request->input('id_user');
-        $paciente->paciente_id=$request->input('paciente_id');
-    	$paciente->name=$request->input('name');
-        $paciente->edad=$request->input('edad');
-    	$paciente->sexo=$request->input('sexo');
-    	$paciente->start=$request->input('start');
-        $paciente->email=$request->input('email');
-    	$paciente->save();
-
-    	
-    	return back()->with('notification', 'usuario registrado exitosamente.');
-    }
+             $id_doc=auth()->user()->id;
+             $pacientes=Paciente::withTrashed()->where('user_id',$id_doc)->get();
+           
+            return view ('doc.pacientes.indexConsulta')->with(compact('pacientes'));
+        }
 
 
-    public function edit($id)
-    {
-    	$paciente = Paciente::find($id);
-    	return view('doc.pacientes.edit')->with(compact('paciente'));
-    }
+        public function store(Request $request)
+        {
+        	$rules =[
+        		'name'=>'required|max:255',
+        		'email'=>'required|email|max:255|unique:pacientes',
+        		'start'=>'date',
+        	];
 
-    public function update()
-    {
+        	$messages=[
+        			'name.requiered'=>'Es necesario ingresar el nombre del usuario',
+        			'name.max'=>'El nombre es demasiado extenso',
+        			'email.requiered'=>'Es necesario ingresar email',
+        			'email.max'=>'Este email es demasiado extenso',
+        			'email.unique'=>'El email ya se encuentra en uso',
+        			'start.date'=>'La fecha no tiene un formato adecuado',
+        		];
 
-    }
+        	$this->validate($request,$rules, $messages);
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-     public function registrarPacientes()
-     {
+        	$paciente= new Paciente();
+            $paciente->user_id=$request->input('id_user');
+            $paciente->paciente_id=$request->input('paciente_id');
+        	$paciente->name=$request->input('name');
+            $paciente->edad=$request->input('edad');
+        	$paciente->sexo=$request->input('sexo');
+        	$paciente->start=$request->input('start');
+            $paciente->email=$request->input('email');
+        	$paciente->save();
+
+        	
+        	return back()->with('notification', 'Paciente Registrado Exitosamente.');
+        }
 
 
-        return view('Doc.pacientes.registrarPaciente');
+        public function edit($id)
+        {
+        	$paciente = Paciente::find($id);
+        	return view('Doc.pacientes.edit')->with(compact('paciente'));
+        }
 
-    }
-   public function guardarPaciente(Request $datos)
-   {
+        public function update($id, Request $request)
+        {
+            $rules =[
+                'name'=>'required|max:255',
+                'email'=>'email|max:255|unique:pacientes',
+                'start'=>'date',
+            ];
+
+            $messages=[
+                    'name.requiered'=>'Es necesario ingresar el nombre del usuario',
+                    'name.max'=>'El nombre es demasiado extenso',
+                    'email.max'=>'Este email es demasiado extenso',
+                    'email.unique'=>'El email ya se encuentra en uso',
+                    'start.date'=>'La fecha no tiene un formato adecuado',
+                ];
+
+            $this->validate($request,$rules, $messages);
+
+            $paciente= Paciente::find($id);
+            $name=$request->input('name');
+            if($name)
+                $paciente->name=($name);
+            $paciente->name=$request->input('name');
+
+             $edad=$request->input('edad');
+            if($edad)
+                $paciente->edad=($edad);
+            
+             $sexo=$request->input('sexo');
+            if($sexo)
+                $paciente->sexo=($sexo);
+
+            $start=$request->input('start');
+            if($start)
+                $paciente->start=($start);
+            
+             $email=$request->input('email');
+            if($email)
+                $paciente->email=($email);
+
+            $paciente->save();
 
 
-        $paciente= new Paciente();
-        $paciente->user_id=$datos->input('id_user');
-        $paciente->paciente_id=$datos->input('paciente_id');
-        $paciente->name=$datos->input('nombre');
-        $paciente->edad=$datos->input('edad');
-        $paciente->sexo=$datos->input('sexo');
-        $paciente->start=$datos->input('start');
-        $paciente->email=$datos->input('email');
-        $paciente->save();
-        return back()->with('usuario registrado exitosamente.');
-     }   
 
-    public function consultarPacientes()
-    {
+
+            $paciente = Paciente::find($id);
+            return back()->with('notification', 'El usuario a sido Editado');
+        }
         
-        $pacientes= Paciente::all();
-        return view ('doc.pacientes.consultarPacientes')->with(compact('pacientes'));
-    }
-     
-}
+        
+           public function delete($id)
+        {
+
+
+            $paciente=Paciente::find($id);
+            $paciente->delete();
+
+
+
+            return redirect('/consultarPacientes')->with('notification', 'El usuario a sido eliminado');
+        }
+
+
+
+     public function restore($id)
+        {
+            
+            Paciente::withTrashed()->find($id)->restore();
+            return redirect('/consultarPacientes')->with('notification', 'El paciente se a  Restaurado');
+        }
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public function registrarPacientes()
+         {
+
+
+            return view('Doc.pacientes.registrarPaciente');
+
+        }
+      public function guardarPaciente(Request $datos)
+       {
+
+
+            $paciente= new Paciente();
+            $paciente->user_id=$datos->input('id_user');
+            $paciente->paciente_id=$datos->input('paciente_id');
+            $paciente->name=$datos->input('nombre');
+            $paciente->edad=$datos->input('edad');
+            $paciente->sexo=$datos->input('sexo');
+            $paciente->start=$datos->input('start');
+            $paciente->email=$datos->input('email');
+            $paciente->save();
+            return back()->with('usuario registrado exitosamente.');
+         }   
+
+      /*  public function consultarPacientes()
+        {
+            
+            $pacientes= Paciente::all();
+            return view ('doc.pacientes.consultarPacientes')->with(compact('pacientes'));
+        }
+         */
+
+        public function pacienteHistorial()
+        {
+           return view('Doc.pacientes.pacienteHistorial');
+        }
+
+
+        public function report()
+        {
+            
+
+
+
+            return view ('doc.pacientes.report');
+        }
+
+         public function guardarReceta(Request $request)
+        {
+            $rules =[
+                
+            ];
+
+            $messages=[
+                    'name.requiered'=>'Es necesario ingresar el nombre del usuario',
+                    'name.max'=>'El nombre es demasiado extenso',
+                    'email.requiered'=>'Es necesario ingresar email',
+                    'email.max'=>'Este email es demasiado extenso',
+                    'email.unique'=>'El email ya se encuentra en uso',
+                    'start.date'=>'La fecha no tiene un formato adecuado',
+                ];
+
+            $this->validate($request,$rules, $messages);
+           
+            $receta= new Receta();
+            $receta->sintomas=$request->input('sintomas');
+            $receta->paciente_id=1;
+            $receta->observaciones=$request->input('observaciones');
+            $receta->tratamientos=$request->input('tratamientos');
+             $receta->diagnosticos=$request->input('diagnosticos');
+            $receta->save();
+
+            
+            return back()->with('notification', 'Receta Guardada Exitosamente.');
+        }
+
+
+
+     }

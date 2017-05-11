@@ -8,7 +8,7 @@
 
 
                     @if(session('notification'))
-                        <div class="alert alert-success">
+                        <div class="alert alert-success" id="alerta">
                             {{session('notification')}}
                         </div>
                     @endif
@@ -49,11 +49,10 @@
                         </div>
 
 
-
-                        <table class="table table-bordered">
+                        <table class="table table-striped table-hover" >
                             <thead>
-                                    <tr>
-                                        <th>Correo</th>
+                                    <tr class="info">    
+                                        <th >Correo</th>
                                         <th>Nombre</th>
                                         <th>Opciones</th>
                                     </tr>
@@ -92,4 +91,9 @@
                         </table>
                 </div>
             </div>
+               <script type="text/javascript">
+            setTimeout(function() {
+                $("#alerta").fadeOut(3000);
+            },2000);
+      </script>
 @endsection

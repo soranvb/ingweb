@@ -1,60 +1,75 @@
 
-<?php
+  <?php
 
-Route::get('/', function ()
-{
-	return view('welcome');
-});
+  Route::get('/', function ()
+  {
+  	return view('welcome');
+  });
 
-Auth::routes();
+  Auth::routes();
 
-Route::get('/home/', 'HomeController@index');
-Route::get('/reportar', 'HomeController@report');
+  Route::get('/home/', 'HomeController@index');
+  
 
-//Administrador
-Route::group(['middleware' => 'admin', 'namespace'=>'Admin'], function () 
-	{
-    	Route::get('/usuarios', 'UserController@index');
-    	Route::post('/usuarios', 'UserController@store');
-
-
-    	Route::get('/usuario/{id}', 'UserController@edit');
-    	Route::post('/usuario/{id}', 'UserController@update');
-    	Route::get('/usuario/{id}/eliminar', 'UserController@delete');
-
-    	Route::get('/usuario/{id}/restaurar', 'UserController@restore');
-    });
-
-//Doctor
-
-//Route::get('/pacientes', 'Doc\PacienteController@index');
-
-Route::group(['middleware' => 'auth', 'namespace'=>'Doc'], function () 
-	{
-    	Route::get('/pacientes', 'PacienteController@index');
-    	Route::post('/pacientes', 'PacienteController@store');
+  //Administrador
+  Route::group(['middleware' => 'admin', 'namespace'=>'Admin'], function () 
+  	{
+      	Route::get('/usuarios', 'UserController@index');
+      	Route::post('/usuarios', 'UserController@store');
 
 
+      	Route::get('/usuario/{id}', 'UserController@edit');
+      	Route::post('/usuario/{id}', 'UserController@update');
+      	Route::get('/usuario/{id}/eliminar', 'UserController@delete');
 
-    	Route::get('/paciente/{id}', 'PacienteController@edit');
-  		Route::post('/paciente/{id}', 'PacienteController@update');
+      	Route::get('/usuario/{id}/restaurar', 'UserController@restore');
+      });
 
- 		Route::get('/paciente/{id}/eliminar', 'PacienteController@delete');
+  //Doctor
+
+  //Route::get('/pacientes', 'Doc\PacienteController@index');
+
+  Route::group(['middleware' => 'auth', 'namespace'=>'Doc'], function () 
+  	{
+      	Route::get('/pacientes', 'PacienteController@index');
+      	Route::post('/pacientes', 'PacienteController@store');
+
+      	Route::get('/paciente/{id}', 'PacienteController@edit');
+    		Route::post('/paciente/{id}', 'PacienteController@update');
+
+        Route::get('/eliminarpaciente/{id}', 'PacienteController@delete');
+
+        Route::get('/restaurarpaciente/{id}', 'PacienteController@restore');
 
 
 
-Route::get('/pacientesConsulta/{id}', 'PacienteController@indexConsulta');
-        //22222222
+
+     //ayuda consulta con hidden 
+      Route::get('/consultarPacientes', 'PacienteController@consultarPacientes'); 
+      Route::get('/searchConsulta','PacienteController@searchConsulta');
 
 
-         Route::get('/registrarPacientes', 'PacienteController@registrarPacientes');
 
-         Route::post('/guardarPaciente', 'PacienteController@guardarPaciente');     
-
-          Route::get('/consultarPacientes', 'PacienteController@consultarPacientes'); 
-
-          Route::post('/consultarPacientes2', 'PacienteController@consultarPacientes2');
+          Route::get('/recetasPacientes', 'PacienteController@RecetaPacientes');
+          Route::get('/search','PacienteController@search');
 
 
-    });
 
+
+          //22222222
+
+
+           Route::get('/registrarPacientes', 'PacienteController@registrarPacientes');
+
+           Route::post('/guardarPaciente', 'PacienteController@guardarPaciente');     
+
+        //    Route::get('/consultarPacientes', 'PacienteController@consultarPacientes'); 
+           
+
+           Route::get('/pacienteshistorial', 'PacienteController@pacienteHistorial');
+
+           Route::get('/Recetas', 'PacienteController@report');
+           Route::post('/Recetas', 'PacienteController@guardarReceta');
+           
+
+      });

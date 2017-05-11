@@ -49,26 +49,19 @@
 
 
 
-                        <table class="table table-bordered">
+                        <table class="table table-striped table-hover" >
                             <thead>
-                                    <tr>
+                                    <tr class="info">    
                                         <th>Correo</th>
                                         <th>Nombre</th>
-                                        <th>Opciones</th>
+                                        
                                     </tr>
                             </thead>
                                 <tbody>
                                     <tr>
                                         <td>{{$user->email}}</td>
                                         <td>{{$user->name}}</td>
-                                        <td>
-                                            <a href="" class="btn btn-sm btn-primary" title="editar">
-                                                <span class="glyphicon glyphicon-pencil"></span>
-                                            </a>
-                                            <a href="" class="btn btn-sm btn-danger" title="Eliminar">
-                                                <span class="glyphicon glyphicon-trash"></span>
-                                            </a>
-                                        </td>
+                                      
                                     </tr>
                                 </tbody>
                         </table>
