@@ -66,6 +66,11 @@ use DB;
                                           '<td>'.$paciente->name.'</td>'.
                                           '<td>'.$sexo.'</td>'.
                                           '<td>'.$paciente->start.'</td>'.
+
+                                          '<td>  <a href="Receta/'.$paciente->id.'" class="btn btn-sm btn-primary" title="Receta">
+                                                <span class="glyphicon glyphicon-list-alt"></span>
+                                            </a>
+                                            </td>'.
                                           '</tr>';
                             } 
                            return Response($output) ;
@@ -73,6 +78,12 @@ use DB;
 
                     } 
             }
+
+            /* '<td>  <a href="{{url(eliminarpaciente)}}/{{$paciente->id}}" class="btn btn-sm btn-danger" title="Eliminar">
+                                                <span class="glyphicon glyphicon-trash"></span>
+                                            </a>
+                                            </td>'.
+                                          '</tr>'; */
 
 
 
@@ -84,7 +95,7 @@ use DB;
                     {
                         $output="";
                         $sexo="";
-                        $pacientes=Paciente::where('name','LIKE','%'.$request->search.'%')
+                        $pacientes=Paciente::withTrashed()->where('name','LIKE','%'.$request->search.'%')
                         ->where('user_id','=', $id_doc)->get();
 
                         if($pacientes)
@@ -106,6 +117,30 @@ use DB;
                                           '<td>'.$sexo.'</td>'.
                                           '<td>'.$paciente->start.'</td>'.
                                           '<td>'.$paciente->user_id.'</td>'.
+                                          '<td>
+                                            
+
+                                                <a href="paciente/'.$paciente->id.'" class="btn btn-sm btn-primary" title="editar">
+                                                <span class="glyphicon glyphicon-pencil"></span>
+                                            </a>
+
+                                            </a>
+
+                                                <a href="eliminarpaciente/'.$paciente->id.'" class="btn btn-sm btn-danger" title="Eliminar">
+                                                <span class="glyphicon glyphicon-trash"></span>
+                                            </a>
+
+                                              <a href="restaurarpaciente/'.$paciente->id.'" class="btn btn-sm btn-success" title="Restaurar">
+                                                <span class="glyphicon glyphicon-repeat"></span>
+                                                
+                                            </a>
+
+
+
+                                            </td>'.
+
+
+                                            '@endif'.
                                           '</tr>';
 
 
@@ -290,13 +325,13 @@ use DB;
         }
 
 
-        public function report()
+        public function recetas()
         {
             
 
 
 
-            return view ('doc.pacientes.report');
+            return view ('doc.pacientes.recetas');
         }
 
          public function guardarReceta(Request $request)

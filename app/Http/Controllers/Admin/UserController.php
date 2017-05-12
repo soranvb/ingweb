@@ -3,8 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\User;
+use Validator;
+use Auth;
+use Image;
+use File;
+
 
 class UserController extends Controller
 {
@@ -101,8 +107,85 @@ class UserController extends Controller
 
         return back()->with('notification', 'El usuario se a  Restaurado');
     }
+    public function profile(){
+        return view('profile', array('user' => Auth::user()) );
+    }
+    public function update_avatar(Request $request)
+    {
+        
+        if($request->hasFile('avatar')){
+            $avatar = $request->file('avatar');
+            $filename = time() . '.' . $avatar->getClientOriginalExtension();
+            Image::make($avatar)->resize(300, 300)->save( public_path('/uploads/avatars/' . $filename ) );
+
+
+            //ELIMINAR IMG GUARDADA
+             $user = User::find(Auth::user()->id);
+             if ($user->avatar !== 'avatar.png') {
+                $file = public_path('uploads/avatars/' . $user->avatar);
+
+                if (File::exists($file)) {
+                    unlink($file);
+                }
+
+            }
+
+            $user = Auth::user();
+            $user->avatar = $filename;
+            $user->save();
+        }
+        return view('profile', array('user' => Auth::user()) );
+    }
 
 
 
+public function updateProfile(Request $request)
+        {
+            $rules =[
+                
+            ];
 
+            $messages=[
+                    'name.requiered'=>'Es necesario ingresar el nombre del usuario',
+                    'name.max'=>'El nombre es demasiado extenso',
+                    'email.max'=>'Este email es demasiado extenso',
+                    'email.unique'=>'El email ya se encuentra en uso',
+                    'start.date'=>'La fecha no tiene un formato adecuado',
+                ];
+
+            $this->validate($request,$rules, $messages);
+
+            $user = User::find(Auth::user()->id);
+            $name=$request->input('name');
+            if($name)
+                $user->name=($name);
+            $user->name=$request->input('name');
+
+             //$edad=$request->input('edad');
+            //if($edad)
+             //   $user->edad=($edad);
+            
+             $sexo=$request->input('sexo');
+            if($sexo)
+                $paciente->sexo=($sexo);
+
+            //$start=$request->input('start');
+            //if($start)
+              //  $paciente->start=($start);
+            
+             $email=$request->input('email');
+            if($email)
+                $user->email=($email);
+
+            $background=$request->input('background');
+            if($background)
+                $user->background=($background);
+
+            $password=$request->input('password');
+        if($password)
+            $user->password=bcrypt($password);
+        $user->save();
+        return back()->with('notification', 'perfil modificado exitosamente');
+
+}
 }

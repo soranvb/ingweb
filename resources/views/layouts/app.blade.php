@@ -12,8 +12,30 @@
 
     <!-- Styles -->
     <!-- Latest compiled and minified CSS -->
+
+
+    @if(Auth::check())
+     <link rel="stylesheet" href="https://bootswatch.com/cerulean/bootstrap.css"> 
+    @if(auth()->user()->background==1)
       <link rel="stylesheet" href="https://bootswatch.com/cerulean/bootstrap.css"> 
+      @endif
+        @if(auth()->user()->background==2)
+        <link rel="stylesheet" href="https://bootswatch.com/darkly/bootstrap.css">
+        @endif 
+          @if(auth()->user()->background==3)
+        <link rel="stylesheet" href="https://bootswatch.com/lumen/bootstrap.css">
+    @endif 
+    @else
+
+        <link rel="stylesheet" href="https://bootswatch.com/cerulean/bootstrap.css"> 
+        
+        @endif
+
+
+
+
       <!--<link rel="stylesheet" href="{{asset("css/bootstrap.css")}}"> -->
+      
 
     <!-- Scripts -->
     <script>
@@ -56,15 +78,17 @@
                            <!-- <li><a href="{{ route('register') }}">Register</a></li>  no debe ser visible-->
                         @else
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
+                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="position:relative; padding-left:50px;">
+                                <img src="/proyectogit/public/uploads/avatars/{{Auth::user()->avatar }}" style="width:32px; height:32px; position:absolute; top:10px; left:10px; border-radius:50%">
+                                {{ Auth::user()->name }} <span class="caret"></span>
+                            </a>
 
                                 <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{url('/profile')}}" ><i class="glyphicon glyphicon-user" ></i>Perfil </a> </li>
                                     <li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                                     document.getElementById('logout-form').submit();"><i class="glyphicon glyphicon-off" ></i>
                                             Logout
                                         </a>
 

@@ -88,7 +88,7 @@
                                         <th>Nombre</th>
                                         <th>Sexo</th>
                                         <th>Fecha de registro</th>
-                                        <th>Doctor</th>
+                                        
                                         <th>Opciones</th>
                                     </tr>
                             </thead>

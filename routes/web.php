@@ -9,6 +9,12 @@
   Auth::routes();
 
   Route::get('/home/', 'HomeController@index');
+
+  Route::get('/profile', 'Admin\UserController@profile');
+   Route::post('/profile', 'Admin\UserController@update_avatar');
+
+     Route::post('/profileUpdate', 'Admin\UserController@updateProfile');
+
   
 
   //Administrador
@@ -17,6 +23,7 @@
       	Route::get('/usuarios', 'UserController@index');
       	Route::post('/usuarios', 'UserController@store');
 
+      
 
       	Route::get('/usuario/{id}', 'UserController@edit');
       	Route::post('/usuario/{id}', 'UserController@update');
@@ -68,7 +75,7 @@
 
            Route::get('/pacienteshistorial', 'PacienteController@pacienteHistorial');
 
-           Route::get('/Recetas', 'PacienteController@report');
+           Route::get('/Recetas', 'PacienteController@recetas');
            Route::post('/Recetas', 'PacienteController@guardarReceta');
            
 

@@ -1,4 +1,6 @@
+@if(Auth::check())
 @extends('layouts.app')
+@endif
 
 @section('content')
 

@@ -18,6 +18,8 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('avatar')->default('default.jpg');
+            $table->string('background')->default(1);
 
             $table->smallInteger('role')->default(1); // 0=Admin 1=doc
 
