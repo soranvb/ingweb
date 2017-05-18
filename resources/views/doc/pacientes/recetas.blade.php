@@ -15,22 +15,26 @@
                                         <th>Paciente</th>
                                         <th>Sexo</th>
                                         <th>Fecha de registro</th>
-                                        <th>Folio</th>
-                                        <th>Tipo Sangre</th>
+                                        <th>Edad</th>
+                                        <th>Doctor</th>
                                      </tr>
                             </thead>
 
                             <tbody>
+                              @foreach($pacientes as $paciente)
                                     
                                     <tr>                                       
-                                        <td>House</td>
-                                         <td>Maquina</td>
-                                         <td>2000?</td>  
-                                         <td>18</td>   
-                                         <td>A+1111sss</td>                                         
-                                        <td>
-
-
+                                        <td>{{$paciente->name}}</td>
+                                            <td>@if($paciente->sexo==1)
+                                              Femenino
+                                              @else
+                                              Masculino
+                                              @endif</td>
+                                         <td>{{$paciente->start}}</td>  
+                                         <td>{{$paciente->edad}}</td>   
+                                         <td>{{$paciente->user_id}}</td>                                         
+                                    <tr>
+                              @endforeach
                         </table>
 
                 <div class="panel-body">
@@ -59,7 +63,8 @@
                             {{csrf_field() }}
 
 
-                              
+                              <input type="text" name="id_paciente" value="{{ $paciente->id }}">
+                              <input type="text" name="id_user" value="{{ Auth::user()->id }}">
 
 
                          <div class="form-group">                          

@@ -325,13 +325,16 @@ use DB;
         }
 
 
-        public function recetas()
+        public function recetas($id)
         {
+             $id_doc=auth()->user()->id;
+             $pacientes=Paciente::withTrashed()->where('id', '=', $id)->get();
+        
             
 
 
 
-            return view ('doc.pacientes.recetas');
+            return view ('doc.pacientes.recetas')->with(compact('pacientes'));;
         }
 
          public function guardarReceta(Request $request)
@@ -353,10 +356,10 @@ use DB;
            
             $receta= new Receta();
             $receta->sintomas=$request->input('sintomas');
-            $receta->paciente_id=1;
+            $receta->paciente_id=$request->input('id_paciente');
             $receta->observaciones=$request->input('observaciones');
             $receta->tratamientos=$request->input('tratamientos');
-             $receta->diagnosticos=$request->input('diagnosticos');
+            $receta->diagnosticos=$request->input('diagnosticos');
             $receta->save();
 
             

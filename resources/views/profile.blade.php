@@ -55,7 +55,7 @@
 
 
                       <div class="form-group">
-                         <label for="background">Color De Fondo</label>
+                         <label for="background">Tema</label>
                           <select name="background" class="form-control" value="{{old('background', $user->background)}}">
                                <option value="" selected>Selecciona Color</option>
                                <option value="1">blanco</option>

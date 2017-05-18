@@ -167,7 +167,7 @@ public function updateProfile(Request $request)
             
              $sexo=$request->input('sexo');
             if($sexo)
-                $paciente->sexo=($sexo);
+                $user->sexo=($sexo);
 
             //$start=$request->input('start');
             //if($start)

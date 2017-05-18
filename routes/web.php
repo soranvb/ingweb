@@ -75,8 +75,8 @@
 
            Route::get('/pacienteshistorial', 'PacienteController@pacienteHistorial');
 
-           Route::get('/Recetas', 'PacienteController@recetas');
-           Route::post('/Recetas', 'PacienteController@guardarReceta');
+           Route::get('/Receta/{id}', 'PacienteController@recetas');
+           Route::post('/Receta/{id}', 'PacienteController@guardarReceta');
            
 
       });
