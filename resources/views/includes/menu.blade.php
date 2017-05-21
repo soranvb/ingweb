@@ -38,17 +38,22 @@
 
 -->
               
-                <li @if(request()->is('consultarPacientes')) class="active" @endif ><a href="{{url('/consultarPacientes')}}">Consultar Pacientes</a> </li>
+                <li @if(request()->is('consultarPacientes')) class="active" @endif ><a href="{{url('/consultarPacientes')}}">Consultar/Modificar Pacientes</a> </li>
                
   
-      @if(auth()->user()->role==1)
+     <!-- @if(auth()->user()->role==1)
       <li @if(request()->is('Recetas')) class="active" @endif ><a href="{{url('/Recetas')}}">Recetas</a></li>
-      @endif
+      @endif -->
 
 
       @if(auth()->user()->role==1)
-      <li @if(request()->is('recetasPacientes')) class="active" @endif ><a href="{{url('/recetasPacientes')}}">RePAcientes</a></li>
+      <li @if(request()->is('recetasPacientes')) class="active" @endif ><a href="{{url('/recetasPacientes')}}">Receta</a></li>
       @endif
+
+      @if(auth()->user()->role==1)
+      <li @if(request()->is('historialRecetas')) class="active" @endif ><a href="{{url('/historialRecetas')}}">Historial De Recetas</a></li>
+      @endif
+
             <!--
       	 			<li><a href="{{url('/pacientesConsulta')}}/{{Auth::user()->id}}"> Consultar Pacientes</a> </li>
      	 			<li><a href="#"> 3 </a> </li>

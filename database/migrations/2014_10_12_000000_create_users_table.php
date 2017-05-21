@@ -20,6 +20,9 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('avatar')->default('default.jpg');
             $table->string('background')->default(1);
+            $table->string('domicilio')->default('benito juarez');
+            $table->integer('telefono')->default('6672212604');
+            $table->string('Especialidad')->default('pediatría');
 
             $table->smallInteger('role')->default(1); // 0=Admin 1=doc
 

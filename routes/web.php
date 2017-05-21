@@ -77,6 +77,11 @@
 
            Route::get('/Receta/{id}', 'PacienteController@recetas');
            Route::post('/Receta/{id}', 'PacienteController@guardarReceta');
+
+           Route::get('pacientePDF/{id}', 'PacienteController@pacientePDF');
+
+           Route::get('/historialRecetas', 'PacienteController@historialRecetas');
+          Route::get('/historialSearch','PacienteController@historialSearch');
            
 
       });

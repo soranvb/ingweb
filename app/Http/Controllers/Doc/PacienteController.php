@@ -70,7 +70,10 @@ use DB;
                                           '<td>  <a href="Receta/'.$paciente->id.'" class="btn btn-sm btn-primary" title="Receta">
                                                 <span class="glyphicon glyphicon-list-alt"></span>
                                             </a>
-                                            </td>'.
+                                            </td>
+                                            <td> <a href="pacientePDF/'.$paciente->id.'" class="btn btn-sm btn-primary" title="PDF"> 
+                                             <span class="glyphicon glyphicon-list-alt"></span>
+                                              </td>'.
                                           '</tr>';
                             } 
                            return Response($output) ;
@@ -365,6 +368,82 @@ use DB;
             
             return back()->with('notification', 'Receta Guardada Exitosamente.');
         }
+
+
+    public function pacientePDF($id)
+    {
+       // $recetas=Receta::where('paciente_id','=',$id)->get();
+       // $pacientes=Paciente::find($id);
+        $recetas=Receta::find($id);
+        $pacientes=Paciente::where('id','=',$id)->get();
+        $vista=view('doc.pacientes.pacientePDF', compact('recetas','pacientes'));
+
+        $dompdf=\App::make('dompdf.wrapper');
+        $dompdf->loadHTML($vista);
+        return $dompdf->stream('reporte.pdf');
+    }
+
+public function historialRecetas()
+        {
+            $id_doc=auth()->user()->id;
+            $pacientes=DB::table('pacientes')->where('user_id',$id_doc)
+            ->join('recetas', 'pacientes.id', '=', 'recetas.paciente_id')
+            ->paginate(10);
+
+            return view('doc.pacientes.historialRecetas', compact('pacientes'));
+
+            
+
+       /* 
+        $pacientes=Paciente::->get();
+
+            return view ('doc.pacientes.historialRecetas')->with(compact('pacientes'));;
+*/
+
+
+
+        }
+
+            public function historialSearch(Request $request)
+            {
+                $id_doc=auth()->user()->id;
+
+                if ($request->ajax())
+                    {
+                        $output="";
+                        //$pacientes=Paciente::withTrashed()->where('user_id',$id_doc)->get(); 
+
+
+                        $pacientes=Paciente::where('name','LIKE','%'.$request->search.'%')
+                         ->where('user_id','=', $id_doc)->get();
+                         $recetas=Receta::where('id','=','id_paciente')->get();
+                      
+
+                       // ->where('user_id','=', $id_doc)->get();
+
+                        if($pacientes)
+                        {
+                            
+                                foreach($pacientes as $key =>$paciente)
+
+                               
+                            {
+                                 
+                                $output.='<tr>'.
+                                          
+                                          '<td>'.$paciente->name.'</td>'.
+                                          '<td>'.$receta->id.'</td>'.
+
+                                          '<td> <a href="pacientePDF/'.$paciente->id.'" class="btn btn-sm btn-primary" title="PDF"> 
+                                             <span class="glyphicon glyphicon-list-alt"></span>
+                                              </td>'.
+                                          '</tr>';
+                            } 
+                           return Response($output) ;
+                        }
+
+                    } 
+            }
 
 
 
