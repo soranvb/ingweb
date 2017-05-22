@@ -88,6 +88,9 @@
                                         <th>Nombre</th>
                                         <th>Sexo</th>
                                         <th>Fecha de registro</th>
+                                        <th>Edad</th>
+                                        <th>E-mail</th>
+                                        <th>Telefono</th>
                                         
                                         <th>Opciones</th>
                                     </tr>

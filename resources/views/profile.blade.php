@@ -1,6 +1,33 @@
     @extends('layouts.app')
 
     @section('content') 
+     <div class="panel panel-primary">
+                <div class="panel-heading">Dashboard</div>
+
+                 <div class="panel-body">
+
+
+                 @if(session('notification'))
+                        <div class="alert alert-success" id="alerta">
+                            {{session('notification')}}
+                        </div>
+                    @endif
+
+
+
+                    @if(count($errors)>0)
+                        <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                        </div>
+                    @endif
+
+
+
+
     <div class="panel panel-primary">
          <div class="panel-heading">Dashboard</div>
             <div class="panel-body">
@@ -44,14 +71,36 @@
                               <input type="text" name="name" class="form-control"  value="{{old('name', $user->name)}}">
                           </div>
 
-                        <div class="form-group">
-                         <label for="sexo">Sexo:</label>
-                          <select name="sexo" class="form-control"  value="{{old('sexo', $user->sexo)}}">
-                               <option value="" selected>Selecciona sexo</option>
-                               <option value="1">Femenino</option>
-                               <option value="2">Masculino</option>
-                          </select>
-                      </div>
+                           <div class="form-group">
+                              <label for="email">E-mail</label>
+                              <input type="text" name="email" class="form-control"  value="{{old('email', $user->email)}}">
+                          </div>
+
+
+
+                          <div class="form-group">
+                              <label for="domicilio">Domicilio</label>
+                              <input type="text" name="domicilio" class="form-control"  value="{{old('domicilio', $user->domicilio)}}">
+                          </div>
+
+
+
+                          <div class="form-group">
+                              <label for="telefono">Telefono</label>
+                              <input type="text" name="telefono" class="form-control"  value="{{old('telefono', $user->telefono)}}">
+                          </div>
+
+                          <div class="form-group">
+                              <label for="especialidad">Especialidad</label>
+                              <input type="text" name="especialidad" class="form-control"  value="{{old('especialidad', $user->especialidad)}}">
+                          </div>
+
+
+
+
+
+
+                      
 
 
                       <div class="form-group">

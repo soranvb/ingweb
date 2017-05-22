@@ -85,18 +85,20 @@
                         <table class="table table-striped table-hover" >
                             <thead>
                                     <tr class="info">                                        
-                                        <th>Nombre</th>
-                                        <th>Sexo</th>
+                                        <th>Nombre Paciente</th>
+                                      
+                                        <th>Diagnostico</th>
                                         <th>Fecha de registro</th>
                                         
-                                        <th>Opciones</th>
+                                        <th>PDF</th>
                                     </tr>
                                        @foreach($pacientes as $a)
                                         <tr>
-                                          <td>{{$a->id}}</td>
+                                          
                                           <td>{{$a->name}}</td>
-                                          <td>{{$a->sintomas}}</td>
-                                          <td> <a href="{{url('pacientePDF')}}/{{$a->id}}" class="btn btn-sm btn-primary" title="PDF"> 
+                                          <td>{{$a->diagnosticos}}</td>
+                                          <td>{{$a->created_at}}</td>
+                                          <td> <a href="{{url('PDF')}}/{{$a->id}}" class="btn btn-sm btn-primary" title="PDF"> 
                                              <span class="glyphicon glyphicon-list-alt"></span>
                                               </td>
                                          
@@ -106,11 +108,9 @@
     
                                          @endforeach
                             </thead>
-                                <tbody>
-                                    
+                                <tbody>                                    
                                 </tbody>
-                        </table>
-                    
+                        </table>                    
                 </div>
             </div>
 

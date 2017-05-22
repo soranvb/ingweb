@@ -8,6 +8,10 @@ use App\Paciente;
 use App\User;
 use App\Receta;
 use DB;
+use Validator;
+use Auth;
+use Image;
+use File;
     class PacienteController extends Controller
     {
           public function index()
@@ -66,13 +70,14 @@ use DB;
                                           '<td>'.$paciente->name.'</td>'.
                                           '<td>'.$sexo.'</td>'.
                                           '<td>'.$paciente->start.'</td>'.
+                                          '<td>'.$paciente->edad.'</td>'.
+                                          '<td>'.$paciente->email.'</td>'.
+                                          '<td>'.$paciente->telefono.'</td>'.
 
                                           '<td>  <a href="Receta/'.$paciente->id.'" class="btn btn-sm btn-primary" title="Receta">
                                                 <span class="glyphicon glyphicon-list-alt"></span>
                                             </a>
-                                            </td>
-                                            <td> <a href="pacientePDF/'.$paciente->id.'" class="btn btn-sm btn-primary" title="PDF"> 
-                                             <span class="glyphicon glyphicon-list-alt"></span>
+                                            
                                               </td>'.
                                           '</tr>';
                             } 
@@ -118,8 +123,12 @@ use DB;
                                 $output.='<tr>'.
                                           '<td>'.$paciente->name.'</td>'.
                                           '<td>'.$sexo.'</td>'.
+                                                                                   
                                           '<td>'.$paciente->start.'</td>'.
-                                          '<td>'.$paciente->user_id.'</td>'.
+                                          '<td>'.$paciente->edad.'</td>'.
+                                          '<td>'.$paciente->email.'</td>'.
+                                          '<td>'.$paciente->telefono.'</td>'.
+
                                           '<td>
                                             
 
@@ -184,15 +193,22 @@ use DB;
         		'name'=>'required|max:255',
         		'email'=>'required|email|max:255|unique:pacientes',
         		'start'=>'date',
+                'domicilio'=>'required|max:255',
+                'telefono'=>'numeric|max:999999999999',
+
         	];
 
         	$messages=[
-        			'name.requiered'=>'Es necesario ingresar el nombre del usuario',
+        			'name.required'=>'Es necesario ingresar el nombre del usuario',
         			'name.max'=>'El nombre es demasiado extenso',
-        			'email.requiered'=>'Es necesario ingresar email',
+        			'email.required'=>'Es necesario ingresar email',
         			'email.max'=>'Este email es demasiado extenso',
         			'email.unique'=>'El email ya se encuentra en uso',
         			'start.date'=>'La fecha no tiene un formato adecuado',
+                    'domicilio.required'=>'Es necesario ingresar el domicilio',
+                    'domicilio.max'=>'El domicilio es demasiado extenso',
+                    'telefono.numeric'=>'El telefono no tiene un formato adecuado',
+                    'telefono.max'=>'El telefono sobrepasa el numero permitido de digitos'
         		];
 
         	$this->validate($request,$rules, $messages);
@@ -205,6 +221,10 @@ use DB;
         	$paciente->sexo=$request->input('sexo');
         	$paciente->start=$request->input('start');
             $paciente->email=$request->input('email');
+            $paciente->domicilio=$request->input('domicilio');
+            $paciente->telefono=$request->input('telefono');
+            $paciente->sangre=$request->input('sangre');
+            $paciente->alergias=$request->input('alergias');
         	$paciente->save();
 
         	
@@ -222,25 +242,27 @@ use DB;
         {
             $rules =[
                 'name'=>'required|max:255',
-                'email'=>'email|max:255|unique:pacientes',
+                'email'=>'email|max:255',
                 'start'=>'date',
+                'telefono'=>'numeric',
             ];
 
             $messages=[
                     'name.requiered'=>'Es necesario ingresar el nombre del usuario',
                     'name.max'=>'El nombre es demasiado extenso',
                     'email.max'=>'Este email es demasiado extenso',
-                    'email.unique'=>'El email ya se encuentra en uso',
                     'start.date'=>'La fecha no tiene un formato adecuado',
+                    'telefono.numeric'=>'No tiene el formato adecuado'
                 ];
 
             $this->validate($request,$rules, $messages);
 
             $paciente= Paciente::find($id);
+
             $name=$request->input('name');
             if($name)
                 $paciente->name=($name);
-            $paciente->name=$request->input('name');
+            
 
              $edad=$request->input('edad');
             if($edad)
@@ -257,6 +279,23 @@ use DB;
              $email=$request->input('email');
             if($email)
                 $paciente->email=($email);
+
+             $telefono=$request->input('telefono');
+            if($telefono)
+                $paciente->telefono=($telefono);
+
+            $sangre=$request->input('sangre');
+            if($sangre)
+                $paciente->sangre=($sangre);
+
+            $domicilio=$request->input('domicilio');
+            if($domicilio)
+                $paciente->domicilio=($domicilio);
+
+            $alergias=$request->input('alergias');
+            if($alergias)
+                $paciente->alergias=($alergias);
+
 
             $paciente->save();
 
@@ -374,6 +413,7 @@ use DB;
     {
        // $recetas=Receta::where('paciente_id','=',$id)->get();
        // $pacientes=Paciente::find($id);
+
         $recetas=Receta::find($id);
         $pacientes=Paciente::where('id','=',$id)->get();
         $vista=view('doc.pacientes.pacientePDF', compact('recetas','pacientes'));
@@ -382,6 +422,24 @@ use DB;
         $dompdf->loadHTML($vista);
         return $dompdf->stream('reporte.pdf');
     }
+      public function PDF($id)
+    {
+       // $recetas=Receta::where('paciente_id','=',$id)->get();
+       // $pacientes=Paciente::find($id);
+
+        $id_doc=auth()->user()->id;
+
+        $recetas=Receta::find($id);
+        $pacientes=Paciente::where('id','=',$id)->get();
+        $user = User::find(Auth::user()->id);
+        $vista=view('doc.pacientes.PDF', compact('recetas','pacientes','user'));
+
+        $dompdf=\App::make('dompdf.wrapper');
+        $dompdf->loadHTML($vista);
+        return $dompdf->stream('reporte.pdf');
+    }
+
+
 
 public function historialRecetas()
         {

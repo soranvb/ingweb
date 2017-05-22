@@ -66,7 +66,7 @@
 
 
 			@else
-			<li><a href="#"> Es necesario logear </a> </li>
+			<p class="text-warning"> Es necesario logear,Si tiene algun problema contactar al administrador admin@hotmail.com </p>
 			@endif
 		</ul>
 	</div>

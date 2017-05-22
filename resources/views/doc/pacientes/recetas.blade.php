@@ -13,10 +13,10 @@
                             <thead>
                                     <tr class="warning">                                        
                                         <th>Paciente</th>
-                                        <th>Sexo</th>
-                                        <th>Fecha de registro</th>
+                                        <th>Sexo</th>                                       
                                         <th>Edad</th>
-                                        <th>Doctor</th>
+                                        <th>Alergias</th>
+                                        <th>Tipo sangre</th>
                                      </tr>
                             </thead>
 
@@ -30,9 +30,10 @@
                                               @else
                                               Masculino
                                               @endif</td>
-                                         <td>{{$paciente->start}}</td>  
+                                          
                                          <td>{{$paciente->edad}}</td>   
-                                         <td>{{$paciente->user_id}}</td>                                         
+                                         <td>{{$paciente->alergias}}</td>        
+                                         <td>{{$paciente->sangre}}</td>                                 
                                     <tr>
                               @endforeach
                         </table>
@@ -63,8 +64,8 @@
                             {{csrf_field() }}
 
 
-                              <input type="text" name="id_paciente" value="{{ $paciente->id }}">
-                              <input type="text" name="id_user" value="{{ Auth::user()->id }}">
+                              <input type="hidden" name="id_paciente" value="{{ $paciente->id }}">
+                              <input type="hidden" name="id_user" value="{{ Auth::user()->id }}">
 
 
                          <div class="form-group">                          
@@ -103,7 +104,7 @@
                           <div>
                             <label for="observaciones" >Observaciones:</label>
                             <textarea name="observaciones" class="form-control"  rows="4" id="observaciones"></textarea>
-                            <span class="help-block">A longer block of help text that breaks onto a new line and may extend beyond one line.</span>
+                            <span class="help-block">Puede dejarce en blanco si no es necesario.</span>
                           </div>
                         </div>
 

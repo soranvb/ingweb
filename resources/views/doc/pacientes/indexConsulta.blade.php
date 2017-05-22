@@ -90,7 +90,9 @@
                                         <th>Nombre</th>
                                         <th>Sexo</th>
                                         <th>Fecha de registro</th>
-                                        <th>Doctor</th>
+                                        <th>Edad</th>                                                                              
+                                        <th>E-Mail</th>
+                                        <th>Telefono</th>
                                         <th>Opciones</th>
                                     </tr>
                             </thead>
@@ -104,9 +106,9 @@
                                               Masculino
                                               @endif</td>
                                          <td>{{$paciente->start}}</td>  
-                                         <td>{{$paciente->user_id}}</td>   
-                                         
-
+                                         <td>{{$paciente->edad}}</td>                                           
+                                         <td>{{$paciente->email}}</td>
+                                         <td>{{$paciente->telefono}}</td>
                                          
                                         <td>
 

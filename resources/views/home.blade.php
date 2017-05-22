@@ -2,7 +2,7 @@
 
 @section('content')
             <div class="panel panel-primary">
-                <div class="panel-heading">Dashboard</div>
+                <div class="panel-heading">Sistema</div>
 
                  <div class="panel-body">
 
@@ -25,7 +25,7 @@
                         </div>
                     @endif
                 <div class="panel-body">
-                    You are logged in!
+                    Estas logeado!
                 </div>
             </div>
 

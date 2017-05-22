@@ -142,6 +142,9 @@ class UserController extends Controller
 public function updateProfile(Request $request)
         {
             $rules =[
+            'name'=>'max:255',
+            'email'=>'email|max:255',
+            'telefono'=>'numeric|max:999999999999',
                 
             ];
 
@@ -151,6 +154,8 @@ public function updateProfile(Request $request)
                     'email.max'=>'Este email es demasiado extenso',
                     'email.unique'=>'El email ya se encuentra en uso',
                     'start.date'=>'La fecha no tiene un formato adecuado',
+                    'telefono.numeric'=>'El telefono no tiene un formato adecuado',
+                    'telefono.max'=>'El telefono sobrepasa el numero permitido de digitos'
                 ];
 
             $this->validate($request,$rules, $messages);
@@ -177,9 +182,21 @@ public function updateProfile(Request $request)
             if($email)
                 $user->email=($email);
 
+            $telefono=$request->input('telefono');
+            if($telefono)
+                $user->telefono=($telefono);
+
+             $domicilio=$request->input('domicilio');
+            if($domicilio)
+                $user->domicilio=($domicilio);
+
             $background=$request->input('background');
             if($background)
                 $user->background=($background);
+
+             $especialidad=$request->input('especialidad');
+            if($especialidad)
+                $user->especialidad=($especialidad);
 
             $password=$request->input('password');
         if($password)

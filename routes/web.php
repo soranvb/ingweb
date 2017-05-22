@@ -82,6 +82,8 @@
 
            Route::get('/historialRecetas', 'PacienteController@historialRecetas');
           Route::get('/historialSearch','PacienteController@historialSearch');
-           
+
+
+           Route::get('PDF/{id}', 'PacienteController@PDF');
 
       });

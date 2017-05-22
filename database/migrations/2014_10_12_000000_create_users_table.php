@@ -21,8 +21,8 @@ class CreateUsersTable extends Migration
             $table->string('avatar')->default('default.jpg');
             $table->string('background')->default(1);
             $table->string('domicilio')->default('benito juarez');
-            $table->integer('telefono')->default('6672212604');
-            $table->string('Especialidad')->default('pediatría');
+            $table->string('telefono')->default('222');
+            $table->string('especialidad')->default('pediatría');
 
             $table->smallInteger('role')->default(1); // 0=Admin 1=doc
 
