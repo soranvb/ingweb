@@ -16,7 +16,7 @@
 			@endif
 
 			@if(auth()->user()->role==1)
-			<li @if(request()->is('pacientes')) class="active" @endif ><a href="{{url('/pacientes')}}">Registerar Pacientes</a></li> 
+			<li @if(request()->is('pacientes')) class="active" @endif ><a href="{{url('/pacientes')}}">Registerar Docente</a></li> 
 <!--
 			 <li role="presentation" class="dropdown">
    			 <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">

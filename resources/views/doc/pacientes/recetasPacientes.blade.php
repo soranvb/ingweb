@@ -92,7 +92,7 @@
                                         <th>E-mail</th>
                                         <th>Telefono</th>
                                         
-                                        <th>Opciones</th>
+                                        <th>Crear Receta</th>
                                     </tr>
                             </thead>
                                 <tbody>
